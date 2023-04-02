@@ -1,8 +1,3 @@
-<template>
-  <div>age{{ age }}</div>
-</template>
-
-<script lang="ts">
 import { defineComponent } from 'vue'
 
 const PropsType = {
@@ -19,6 +14,8 @@ export default defineComponent({
   mounted() {
     // this.age // (property) age: number   ok
   },
+
+  setup(props) {
+    return () => <div>{props.age}</div>
+  },
 })
-</script>
-<style lang="scss" scoped></style>
