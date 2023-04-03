@@ -1,14 +1,19 @@
 const Ajv = require('ajv')
-const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
-require('ajv-formats')(ajv)
+const ajv = new Ajv({ allErrors: true }) // options can be passed, e.g. {allErrors: true}
+const localize = require('ajv-i18n')
+require('ajv-errors')(ajv /*, {singleError: true} */)
 
 const schema = {
   type: 'object',
   properties: {
     name: {
       type: 'string',
-      format: 'test',
-      //   minLength: 10,
+      // customkeywprd: true,
+      minLength: 10,
+      errorMessage: {
+        type: '必须是字符串',
+        minLength: '长度不能小于10',
+      },
     },
     age: {
       type: 'number',
@@ -33,16 +38,23 @@ const schema = {
   required: ['name', 'age'],
 }
 
-ajv.addFormat('test', (data) => {
-  console.log(data, '------------')
-  return data === 'haha'
-})
+// ajv.addKeyword('customkeywprd', {
+//   macro() {
+//     return {
+//       minLength: 10, // 相当于properties - name 里面加上了minLength: 10
+//     }
+//   },
+// })
 
 const validate = ajv.compile(schema)
 const valid = validate({
+  // customkeywprd: 'wkk',
   name: 'haha',
   age: 18,
   pets: ['string', 10],
   isWorker: true,
 })
-if (!valid) console.log(validate.errors)
+if (!valid) {
+  // localize.zh(validate.errors)
+  console.log(validate.errors)
+}
