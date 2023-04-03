@@ -1,7 +1,4 @@
 import { createApp } from 'vue'
-// import App from './App.vue'
-
-// const img = require('./assets/logo.png') // eslint-disable-line
 
 import App from './App'
 
