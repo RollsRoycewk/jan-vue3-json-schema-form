@@ -2,8 +2,7 @@ export default {
   name: 'Simple',
   schema: {
     description: 'A simple form example.',
-    // type: 'object',
-    type: 'string',
+    type: 'object',
     required: ['firstName', 'lastName'],
     properties: {
       firstName: {

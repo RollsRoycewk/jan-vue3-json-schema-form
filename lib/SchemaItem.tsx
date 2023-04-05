@@ -1,16 +1,25 @@
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { SchemaTypes, FiledPropsDefine } from './types'
 // import StringField from './fields/StringField'
 import StringField from './fields/StringField.vue'
 // import NumberField from './fields/NumberField'
 import NumberField from './fields/NumberField.vue'
+import ObjectField from './ObjectField'
+
+import { retrieveSchema } from './utils'
 
 export default defineComponent({
   name: 'SchemaItem',
   props: FiledPropsDefine,
-  setup() {
-    return (props) => {
+  setup(props) {
+    const retrievedSchemaRef = computed(() => {
+      const { schema, rootSchema, value } = props
+      return retrieveSchema(schema, rootSchema, value)
+    })
+
+    return () => {
       const { schema } = props
+      const retrievedSchema = retrievedSchemaRef.value
 
       // TODO:如果type没有指定,我们可以猜测这个type
       const type = schema.type
@@ -25,12 +34,16 @@ export default defineComponent({
           Component = NumberField
           break
         }
+        case SchemaTypes.OBJECT: {
+          Component = ObjectField
+          break
+        }
         default: {
           console.warn(`${type} is not suppopted`)
         }
       }
 
-      return <Component {...props} schema={schema} />
+      return <Component {...props} schema={retrievedSchema} />
     }
   },
 })
