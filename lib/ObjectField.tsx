@@ -1,13 +1,7 @@
-import { defineComponent, inject } from 'vue'
+import { defineComponent } from 'vue'
 import { FiledPropsDefine } from './types'
-import { SchemaFormContextKey } from './context'
 import { isObject } from './utils'
-
-// const TypeHelperComponent = defineComponent({
-//   props: FiledPropsDefine,
-// })
-
-// type SchemaItemDefine = typeof TypeHelperComponent
+import { useVJSFContent } from './context'
 
 export default defineComponent({
   name: 'ObjectField',
@@ -15,7 +9,7 @@ export default defineComponent({
   setup(props) {
     return () => {
       // SchemaItem组件 父级结点provide分发过来的
-      const context: any = inject(SchemaFormContextKey)
+      const context = useVJSFContent()
 
       const handleObjectFieldChange = (k: string, v: any) => {
         const value: any = isObject(props.value) ? props.value : {}
