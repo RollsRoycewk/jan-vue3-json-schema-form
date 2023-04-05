@@ -31,21 +31,21 @@ export default {
           type: 'string',
         },
       },
-      singleTypeArrayItemObject: {
-        title: 'singleTypeArrayItemObject',
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string',
-            },
-            age: {
-              type: 'number',
-            },
-          },
-        },
-      },
+      // singleTypeArrayItemObject: {
+      //   title: 'singleTypeArrayItemObject',
+      //   type: 'array',
+      //   items: {
+      //     type: 'object',
+      //     properties: {
+      //       name: {
+      //         type: 'string',
+      //       },
+      //       age: {
+      //         type: 'number',
+      //       },
+      //     },
+      //   },
+      // },
       multiSelectArray: {
         title: 'multiSelectArray',
         type: 'array',
