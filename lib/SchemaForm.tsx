@@ -11,7 +11,7 @@ import { Schema, Theme } from './types'
 import SchemaItem from './SchemaItem'
 import { SchemaFormContextKey } from './context'
 import Ajv, { Options } from 'ajv'
-import { validateFormData } from './validator'
+import { ErrorSchema, validateFormData } from './validator'
 
 interface ContextRef {
   doValidate: () => {
@@ -58,6 +58,9 @@ export default defineComponent({
       props.onChange(v)
     }
 
+    // 校验结果每次都会重新生成
+    const errorSchemaRef: Ref<ErrorSchema> = shallowRef({})
+
     // 因为props.ajvOptions是会变化的
     const validatorRef: Ref<Ajv> = shallowRef() as any
 
@@ -86,6 +89,8 @@ export default defineComponent({
                 props.locale,
               )
 
+              errorSchemaRef.value = result.errorSchema
+
               return result
             },
           }
@@ -108,6 +113,7 @@ export default defineComponent({
       const { schema, value } = props
       return (
         <SchemaItem
+          errorSchema={errorSchemaRef.value || {}}
           schema={schema}
           value={value}
           rootSchema={schema}

@@ -156,7 +156,7 @@ export default defineComponent({
     const SelectionWidgetRef = getWidget(SelectionWidgetNames.SelectionWidget)
 
     return () => {
-      const { schema, rootSchema, value } = props
+      const { schema, rootSchema, value, errorSchema } = props
       const SchemaItem = context.SchemaItem
       // const SelectionWidget = context.theme.widgets.SelectionWidget
       const SelectionWidget = SelectionWidgetRef.value
@@ -170,6 +170,7 @@ export default defineComponent({
 
         return items.map((s: Schema, index: number) => (
           <SchemaItem
+            errorSchema={errorSchema[index] || {}}
             schema={s}
             key={index}
             rootSchema={rootSchema}
@@ -189,6 +190,7 @@ export default defineComponent({
             index={index}
           >
             <SchemaItem
+              errorSchema={errorSchema[index] || {}}
               schema={schema.items as Schema}
               rootSchema={rootSchema}
               value={v}
@@ -206,6 +208,7 @@ export default defineComponent({
 
         return (
           <SelectionWidget
+            errors={errorSchema.__errors}
             onChange={props.onChange}
             value={props.value}
             options={options}

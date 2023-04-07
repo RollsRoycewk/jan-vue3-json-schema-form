@@ -11,8 +11,14 @@ import toPath from 'lodash.topath'
 //   schemaPath: string
 // }
 
+interface ErrorSchemaObject {
+  [level: string]: ErrorSchema
+}
+export type ErrorSchema = ErrorSchemaObject & {
+  __errors?: string[]
+}
+
 function toErrorSchema(errors) {
-  debugger
   if (errors.length < 1) return {}
 
   return errors.reduce((errorSchema, error) => {

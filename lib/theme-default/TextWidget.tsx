@@ -3,6 +3,7 @@ import { CommonWidgetPropsDefine, CommonWidgetDefine } from '../types'
 
 // const TextWidget: CommonWidgetDefine = defineComponent({
 const TextWidget = defineComponent({
+  name: 'TextWidget',
   props: CommonWidgetPropsDefine,
   setup(props) {
     const handleChange = (e: any) => {
