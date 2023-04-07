@@ -6,7 +6,7 @@ import {
   PropType,
   provide,
 } from 'vue'
-import { Theme } from './types'
+import { Theme, SelectionWidgetNames, CommonWidgetsNames } from './types'
 
 const THEME_PROVIDER_KEY = Symbol()
 
@@ -27,7 +27,9 @@ const ThemeProvider = defineComponent({
   },
 })
 
-export function getWidget(name: string) {
+export function getWidget<T extends SelectionWidgetNames | CommonWidgetsNames>(
+  name: T,
+) {
   const context: ComputedRef<Theme> | undefined =
     inject<ComputedRef<Theme>>(THEME_PROVIDER_KEY)
 
