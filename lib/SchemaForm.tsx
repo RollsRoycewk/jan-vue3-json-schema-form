@@ -1,7 +1,14 @@
-import { defineComponent, PropType, provide } from 'vue'
+import { defineComponent, PropType, provide, Ref, watch } from 'vue'
 import { Schema, Theme } from './types'
 import SchemaItem from './SchemaItem'
 import { SchemaFormContextKey } from './context'
+
+interface ContextRef {
+  doValidate: () => {
+    errors: any[]
+    valid: boolean
+  }
+}
 
 export default defineComponent({
   name: 'SchemaForm',
@@ -17,6 +24,9 @@ export default defineComponent({
       type: Function as PropType<(v: any) => void>,
       required: true,
     },
+    contextRef: {
+      type: Object as PropType<Ref<ContextRef | undefined>>,
+    },
     // theme: {
     //   type: Object as PropType<Theme>,
     //   required: true,
@@ -26,6 +36,26 @@ export default defineComponent({
     const handleChange = (v: any) => {
       props.onChange(v)
     }
+
+    watch(
+      () => props.contextRef,
+      () => {
+        if (props.contextRef) {
+          props.contextRef.value = {
+            doValidate() {
+              console.log('sadasdddd---------')
+              return {
+                valid: true,
+                errors: [],
+              }
+            },
+          }
+        }
+      },
+      {
+        immediate: true,
+      },
+    )
 
     // 如果提供的数据会变化,注意使用reactive
     const context: any = {
