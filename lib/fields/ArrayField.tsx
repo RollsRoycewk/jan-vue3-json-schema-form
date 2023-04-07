@@ -2,7 +2,7 @@ import { defineComponent, PropType } from 'vue'
 import { FiledPropsDefine, Schema } from '../types'
 import { useVJSFContent } from '../context'
 import { createUseStyles } from 'vue-jss'
-import SelectWidget from '../widgets/Selection'
+// import SelectWidget from '../widgets/Selection'
 
 const useStyles = createUseStyles({
   container: {
@@ -155,6 +155,7 @@ export default defineComponent({
     return () => {
       const { schema, rootSchema, value } = props
       const SchemaItem = context.SchemaItem
+      const SelectionWidget = context.theme.widgets.SelectionWidget
 
       const isMultiType = Array.isArray(schema.items)
       const isSelect = schema.items && (schema.items as any).enum
@@ -200,7 +201,7 @@ export default defineComponent({
         }))
 
         return (
-          <SelectWidget
+          <SelectionWidget
             onChange={props.onChange}
             value={props.value}
             options={options}

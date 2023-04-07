@@ -1,5 +1,5 @@
 import { defineComponent, PropType, provide } from 'vue'
-import { Schema } from './types'
+import { Schema, Theme } from './types'
 import SchemaItem from './SchemaItem'
 import { SchemaFormContextKey } from './context'
 
@@ -17,6 +17,10 @@ export default defineComponent({
       type: Function as PropType<(v: any) => void>,
       required: true,
     },
+    theme: {
+      type: Object as PropType<Theme>,
+      required: true,
+    },
   },
   setup(props) {
     const handleChange = (v: any) => {
@@ -26,6 +30,7 @@ export default defineComponent({
     // 如果提供的数据会变化,注意使用reactive
     const context: any = {
       SchemaItem,
+      theme: props.theme,
     }
     // 向当前节点后的所有子节点以及叶子结点提供SchemItem组件,相比直接引用组件相互调用减少问题出现
     provide(SchemaFormContextKey, context)

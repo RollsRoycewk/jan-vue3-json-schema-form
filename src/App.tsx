@@ -4,6 +4,7 @@ import { createUseStyles } from 'vue-jss'
 
 import demos from './demos'
 import SchemaForm from '../lib'
+import thmeDefault from '../lib/theme-default'
 
 function toJson(data: any) {
   return JSON.stringify(data, null, 2)
@@ -176,6 +177,7 @@ export default defineComponent({
             </div>
             <div class={classes.form}>
               <SchemaForm
+                theme={thmeDefault as any}
                 schema={demo.schema}
                 value={demo.data}
                 onChange={handleChange}
