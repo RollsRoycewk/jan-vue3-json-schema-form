@@ -3,8 +3,9 @@ import MonacoEditor from './components/MonacoEditor'
 import { createUseStyles } from 'vue-jss'
 
 import demos from './demos'
-import SchemaForm from '../lib'
+import SchemaForm, { ThemeProvider } from '../lib'
 import thmeDefault from '../lib/theme-default'
+import themeDefault from '../lib/theme-default'
 
 function toJson(data: any) {
   return JSON.stringify(data, null, 2)
@@ -176,12 +177,13 @@ export default defineComponent({
               </div>
             </div>
             <div class={classes.form}>
-              <SchemaForm
-                theme={thmeDefault as any}
-                schema={demo.schema}
-                value={demo.data}
-                onChange={handleChange}
-              />
+              <ThemeProvider theme={themeDefault as any}>
+                <SchemaForm
+                  schema={demo.schema}
+                  value={demo.data}
+                  onChange={handleChange}
+                />
+              </ThemeProvider>
             </div>
           </div>
         </div>

@@ -14,7 +14,6 @@ export const SchemaFormContextKey = Symbol()
 export function useVJSFContent() {
   const context:
     | {
-        theme: Theme
         SchemaItem: CommonFieldType
       }
     | undefined = inject(SchemaFormContextKey)
