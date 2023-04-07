@@ -7,8 +7,9 @@ const TextWidget = defineComponent({
   setup(props) {
     const handleChange = (e: any) => {
       const value = e.target.value
-
       props.onChange(value)
+      //   e.target.value = props.value
+      //   props.onChange(e.target.value)
     }
 
     return () => {

@@ -7,12 +7,21 @@ export default defineComponent({
   props: FiledPropsDefine,
   setup(props) {
     const handleChange = (v: string) => {
-      debugger
       console.log('eeeeee', v)
 
       // const value = e.target.value
 
       props.onChange(v)
+
+      // props.onChange(v) 关闭后
+
+      // TextWidget.tsx
+      //   e.target.value = props.value
+      //   props.onChange(e.target.value)
+
+      // 此页面handleChange
+      // const value = e.target.value
+      // props.onChange(value)
     }
 
     const TextWidgetRef = getWidget(CommonWidgetsNames.TextWidget)
