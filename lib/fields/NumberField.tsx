@@ -1,14 +1,13 @@
-import { FiledPropsDefine } from '../types'
+import { FiledPropsDefine, CommonWidgetsNames } from '../types'
 import { defineComponent } from 'vue'
+import { getWidget } from '../theme'
 
 export default defineComponent({
   name: 'NumberField',
   props: FiledPropsDefine,
   setup(props) {
-    const handleChange = (e: any) => {
-      const value = e.target.value
-
-      const num = Number(value)
+    const handleChange = (v: any) => {
+      const num = Number(v)
 
       if (Number.isNaN(num)) {
         props.onChange(undefined)
@@ -17,9 +16,14 @@ export default defineComponent({
       }
     }
 
+    const NumberWidgetRef = getWidget(CommonWidgetsNames.NumberWidget)
+
     return () => {
-      const { value } = props
-      return <input type="number" value={value} onInput={handleChange} />
+      const { schema, rootSchema, ...rest } = props
+      const NumberWidget = NumberWidgetRef.value
+
+      return <NumberWidget {...rest} onChange={handleChange} />
+      // return <input type="number" value={value} onInput={handleChange} />
     }
   },
 })
