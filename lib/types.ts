@@ -75,7 +75,7 @@ export const FiledPropsDefine = {
 
 export type CommonFieldType = DefineComponent<typeof FiledPropsDefine>
 
-const CommonWidgetPropsDefine = {
+export const CommonWidgetPropsDefine = {
   value: {},
   onChange: {
     type: Function as PropType<(v: any) => void>,
@@ -83,7 +83,7 @@ const CommonWidgetPropsDefine = {
   },
 } as const
 
-const SelectionWidgetPropsDefine = {
+export const SelectionWidgetPropsDefine = {
   ...CommonWidgetPropsDefine,
   options: {
     type: Array as PropType<
@@ -94,16 +94,18 @@ const SelectionWidgetPropsDefine = {
     >,
     required: true,
   },
-}
+} as const
 
-type CommonWidgetDefine = DefineComponent<typeof CommonWidgetPropsDefine>
+export type CommonWidgetDefine = DefineComponent<typeof CommonWidgetPropsDefine>
 
-type SelectionWidgetDefine = DefineComponent<typeof SelectionWidgetPropsDefine>
+export type SelectionWidgetDefine = DefineComponent<
+  typeof SelectionWidgetPropsDefine
+>
 
 export interface Theme {
   widgets: {
     SelectionWidget: SelectionWidgetDefine
-    textWidget: CommonWidgetDefine
+    TextWidget: CommonWidgetDefine
     NumberWidget: CommonWidgetDefine
   }
 }
