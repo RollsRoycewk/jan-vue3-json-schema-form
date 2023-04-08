@@ -189,6 +189,7 @@ export default defineComponent({
                   value={demo.data}
                   onChange={handleChange}
                   ref={nameRef}
+                  customValidate={demo.customValidate}
                 />
               </ThemeProvider>
               <button

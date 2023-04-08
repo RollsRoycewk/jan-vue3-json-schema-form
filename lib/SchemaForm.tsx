@@ -48,6 +48,9 @@ export default defineComponent({
       type: String,
       default: 'zh',
     },
+    customValidate: {
+      type: Function as PropType<(data: any, errors: any) => void>,
+    },
     // theme: {
     //   type: Object as PropType<Theme>,
     //   required: true,
@@ -81,17 +84,24 @@ export default defineComponent({
               //   props.schema,
               //   props.value,
               // ) as boolean
+              // const result = validateFormData(
+              //   validatorRef.value,
+              //   props.value,
+              //   props.schema,
+              //   props.locale,
+              //   props.customValidate,
+              // )
+              // errorSchemaRef.value = result.errorSchema
+              // return new Promise((resolve) => {
+              //   validateResolveRef.value = resolve
+              //   doValidate()
+              // })
+              // return result
 
-              const result = validateFormData(
-                validatorRef.value,
-                props.value,
-                props.schema,
-                props.locale,
-              )
-
-              errorSchemaRef.value = result.errorSchema
-
-              return result
+              return {
+                errors: [],
+                valid: false,
+              }
             },
           }
         }

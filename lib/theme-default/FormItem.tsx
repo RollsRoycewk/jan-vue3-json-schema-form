@@ -33,7 +33,7 @@ const FormItem = defineComponent({
 
       return (
         <div class={classes.container}>
-          <label class={classes.label}>{schema.title}111</label>
+          <label class={classes.label}>{schema.title}</label>
           {slots.default && slots.default()}
           <ul class={classes.errorText}>
             {errors?.map((err) => {

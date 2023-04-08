@@ -2,6 +2,7 @@ import Ajv from 'ajv'
 import i18n from 'ajv-i18n'
 import { Schema } from './types'
 import toPath from 'lodash.topath'
+import { isObject } from './utils'
 
 // interface transformErrorObject {
 //   name: string
@@ -74,11 +75,12 @@ function transformErrors(errors) {
   })
 }
 
-export function validateFormData(
+export async function validateFormData(
   validator: Ajv,
   formData: any,
   schema: Schema,
   locale: string,
+  customValidate?: (data: any, errors: any) => void,
 ) {
   let validationError: any = null
 
@@ -102,9 +104,66 @@ export function validateFormData(
 
   const errorSchema = toErrorSchema(errors)
 
+  if (!customValidate) {
+    return {
+      errors,
+      errorSchema,
+      valid: errors.length === 0,
+    }
+  }
+
+  const proxy = createErrorProxy()
+  await customValidate(formData, proxy)
+  const newErrorSchema = mergeObjects(errorSchema, proxy, true)
+
   return {
     errors,
-    errorSchema,
+    errorSchema: newErrorSchema,
     valid: errors.length === 0,
   }
+}
+
+function createErrorProxy() {
+  const raw = {}
+  return new Proxy(raw, {
+    get(target, key, reciver) {
+      if (key === 'addError') {
+        // 返回一个addError方法
+        return (msg: string) => {
+          const __errors = Reflect.get(target, '__errors', reciver)
+          if (__errors && Array.isArray(__errors)) {
+            __errors.push(msg)
+          } else {
+            ;(target as any).__errors = [msg]
+          }
+        }
+      }
+      const res = Reflect.get(target, key, reciver)
+      if (res === undefined) {
+        const p: any = createErrorProxy()
+        ;(target as any)[key] = p
+        return p
+      }
+
+      return res
+    },
+  })
+}
+
+export function mergeObjects(obj1: any, obj2: any, concatArrays = false) {
+  // Recursively merge deeply nested objects.
+  const acc = Object.assign({}, obj1) // Prevent mutation of source object.
+  return Object.keys(obj2).reduce((acc, key) => {
+    const left = obj1 ? obj1[key] : {},
+      right = obj2[key]
+
+    if (obj1 && obj1.hasOwnProperty(key) && isObject(right)) {
+      acc[key] = mergeObjects(left, right, concatArrays)
+    } else if (concatArrays && Array.isArray(left) && Array.isArray(right)) {
+      acc[key] = left.concat(right)
+    } else {
+      acc[key] = right
+    }
+    return acc
+  }, acc)
 }
