@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import { CommonWidgetPropsDefine } from '../types'
+import { CommonWidgetPropsDefine, CommonWidgetDefine } from '../types'
 import { createUseStyles } from 'vue-jss'
 
 const useStatyles = createUseStyles({
@@ -17,7 +17,8 @@ const useStatyles = createUseStyles({
   },
 })
 
-export default defineComponent({
+// HOC: Higher Order Component : 高阶组件  好处就是解耦
+const FormItem = defineComponent({
   name: 'FormItem',
 
   props: CommonWidgetPropsDefine,
@@ -44,3 +45,21 @@ export default defineComponent({
     }
   },
 })
+
+export default FormItem
+
+export function withFormItem(Widget: any) {
+  return defineComponent({
+    name: `Wrapped${Widget.name}`,
+    props: CommonWidgetPropsDefine,
+    setup(props, { attrs }) {
+      return () => {
+        return (
+          <FormItem {...props}>
+            <Widget {...props} {...attrs} />
+          </FormItem>
+        )
+      }
+    },
+  }) as CommonWidgetDefine
+}
