@@ -37,6 +37,10 @@ export default {
     properties: {
       pass1: {
         widget: PasswordWiget,
+        color: 'red',
+      },
+      pass2: {
+        color: 'red',
       },
     },
   },

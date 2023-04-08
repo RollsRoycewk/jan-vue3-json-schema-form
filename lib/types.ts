@@ -89,6 +89,9 @@ export const CommonWidgetPropsDefine = {
     type: Object as PropType<Schema>,
     required: true,
   },
+  options: {
+    type: Object as PropType<{ [key: string]: any }>,
+  },
 } as const
 
 export const SelectionWidgetPropsDefine = {
@@ -134,8 +137,6 @@ export type UISchema = {
     [key: string]: UISchema
   }
   items?: UISchema | UISchema[]
+} & {
+  [key: string]: any // w: 开头
 }
-
-// & {
-//   [key: string]: any // w: 开头
-// }
