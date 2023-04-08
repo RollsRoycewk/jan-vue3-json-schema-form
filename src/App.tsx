@@ -190,6 +190,7 @@ export default defineComponent({
             <div class={classes.form}>
               <ThemeProvider theme={themeDefault as any}>
                 <SchemaForm
+                  uiSchema={demo.uiSchema || {}}
                   contextRef={contextRef}
                   schema={demo.schema}
                   value={demo.data}

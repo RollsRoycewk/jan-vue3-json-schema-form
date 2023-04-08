@@ -1,3 +1,5 @@
+import PasswordWiget from '../components/PasswordWiget'
+
 export default {
   name: 'Demo',
   schema: {
@@ -30,6 +32,13 @@ export default {
         reslove({})
       }, 2000)
     })
+  },
+  uiSchema: {
+    properties: {
+      pass1: {
+        widget: PasswordWiget,
+      },
+    },
   },
   default: 1,
 }
