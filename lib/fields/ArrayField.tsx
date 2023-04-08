@@ -156,7 +156,7 @@ export default defineComponent({
     const SelectionWidgetRef = getWidget(SelectionWidgetNames.SelectionWidget)
 
     return () => {
-      const { schema, rootSchema, value, errorSchema } = props
+      const { schema, rootSchema, value, errorSchema, uiSchema } = props
       const SchemaItem = context.SchemaItem
       // const SelectionWidget = context.theme.widgets.SelectionWidget
       const SelectionWidget = SelectionWidgetRef.value
@@ -168,16 +168,24 @@ export default defineComponent({
         const items: Schema[] = schema.items as any
         const arr = Array.isArray(value) ? value : []
 
-        return items.map((s: Schema, index: number) => (
-          <SchemaItem
-            errorSchema={errorSchema[index] || {}}
-            schema={s}
-            key={index}
-            rootSchema={rootSchema}
-            value={arr[index]}
-            onChange={(v: any) => handleArrayItemChange(v, index)}
-          />
-        ))
+        return items.map((s: Schema, index: number) => {
+          const itemsUISchema = uiSchema.items
+          const us = Array.isArray(itemsUISchema)
+            ? itemsUISchema[index] || {}
+            : {}
+
+          return (
+            <SchemaItem
+              uiSchema={us}
+              errorSchema={errorSchema[index] || {}}
+              schema={s}
+              key={index}
+              rootSchema={rootSchema}
+              value={arr[index]}
+              onChange={(v: any) => handleArrayItemChange(v, index)}
+            />
+          )
+        })
       } else if (!isSelect) {
         const arr = Array.isArray(value) ? value : []
 
@@ -190,6 +198,7 @@ export default defineComponent({
             index={index}
           >
             <SchemaItem
+              uiSchema={(uiSchema.items as any) || {}}
               errorSchema={errorSchema[index] || {}}
               schema={schema.items as Schema}
               rootSchema={rootSchema}

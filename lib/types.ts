@@ -68,10 +68,10 @@ export const FiledPropsDefine = {
     type: Object as PropType<ErrorSchema>,
     required: true,
   },
-  //   uiSchema: {
-  //     type: Object as PropType<UISchema>,
-  //     required: true,
-  //   },
+  uiSchema: {
+    type: Object as PropType<UISchema>,
+    required: true,
+  },
 } as const
 
 export type CommonFieldType = DefineComponent<typeof FiledPropsDefine>
@@ -126,3 +126,16 @@ export interface Theme {
     [CommonWidgetsNames.NumberWidget]: CommonWidgetDefine
   }
 }
+
+// 接收第一个大括号里面定义好的属性以外（第二个大括号）的任意属性
+export type UISchema = {
+  widget?: string | CommonWidgetDefine
+  properties?: {
+    [key: string]: UISchema
+  }
+  items?: UISchema | UISchema[]
+}
+
+// & {
+//   [key: string]: any // w: 开头
+// }
