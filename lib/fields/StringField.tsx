@@ -27,13 +27,13 @@ export default defineComponent({
     const TextWidgetRef = getWidget(CommonWidgetsNames.TextWidget)
 
     return () => {
-      const { schema, rootSchema, errorSchema, ...rest } = props
+      const { rootSchema, errorSchema, ...rest } = props
       const TextWidget = TextWidgetRef.value
 
       return (
         <TextWidget
-          {...rest}
           errors={errorSchema.__errors}
+          {...rest}
           onChange={handleChange}
         />
       )
