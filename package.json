@@ -8,8 +8,8 @@
     "build:theme": "TYPE=lib vue-cli-service build --target lib --name theme-default/index --no-clean lib/theme-default/index.tsx ",
     "build": "rimraf dist && npm run build:core && npm run build:theme",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit:cov": "vue-cli-service test:unit --coverage",
-    "lint": "vue-cli-service lint --fix"
+    "lint": "vue-cli-service lint --fix",
+    "test:unit:cov": "vue-cli-service test:unit --coverage"
   },
   "dependencies": {
     "ajv": "^8.12.0",
