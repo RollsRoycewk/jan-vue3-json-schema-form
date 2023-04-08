@@ -132,6 +132,12 @@ export default defineComponent({
     const contextRef = ref()
     const nameRef = ref()
 
+    function validateForm() {
+      contextRef.value.doValidate().then((result: any) => {
+        console.log('validateFormresult', result)
+      })
+    }
+
     return () => {
       const selected = selectedRef.value
       const classes = classesRef.value
@@ -192,11 +198,7 @@ export default defineComponent({
                   customValidate={demo.customValidate}
                 />
               </ThemeProvider>
-              <button
-                onClick={() => console.log(contextRef.value.doValidate())}
-              >
-                校 验
-              </button>
+              <button onClick={() => console.log(validateForm())}>校 验</button>
             </div>
           </div>
         </div>
